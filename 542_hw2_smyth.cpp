@@ -21,7 +21,7 @@ int main()
     // 4    2   24     11 154
     // 10   3   2430   6  3640
     double FILNT_arith[5] = { -1,  -1, 24, 11, 154 }; char FILNT_char[] = { 'F', 'I', 'L', 'N', 'T' };
-    double FILNT_geo[5] = { 10, -1, 2430, 6, -1 };
+    double FILNT_geo[5] = { 10, -1, 2430, -1, 3640 };
     
     cout << "Please input three variables in order F I L N T . If blank, input -1: ";
     
@@ -77,6 +77,8 @@ void getI(double filnt[], bool arith) {
     else if (hasBlankN(filnt, 1)) {
         if (!hasBlankN(filnt, 0) && !hasBlankN(filnt, 2) && !hasBlankN(filnt, 3))
             filnt[1]= pow(10, log10(filnt[2]/filnt[0])/(filnt[3]-1));
+	else if (!hasBlankN(filnt, 0) && !hasBlankN(filnt, 2) && !hasBlankN(filnt, 4))
+	    filnt[1]= (filnt[0]-filnt[4]) / (-1*filnt[4] + filnt[2]);
     }
 }
 
@@ -98,6 +100,10 @@ void getN(double filnt[], bool arith) {
     else if (hasBlankN(filnt, 3))
         if (!hasBlankN(filnt, 0) && !hasBlankN(filnt, 1) && !hasBlankN(filnt, 2))
             filnt[3] = 1 + (log10(filnt[2]/filnt[0])/log10(filnt[1]));
+	else if (!hasBlankN(filnt, 0) && !hasBlankN(filnt, 1) && !hasBlankN(filnt, 4))
+	    filnt[3] = log(1-(filnt[4]*(1-filnt[1])/filnt[0])) / log(filnt[1]);
+	else if (!hasBlankN(filnt, 1) && !hasBlankN(filnt, 2) && !hasBlankN(filnt, 4))
+	    filnt[3] = log((filnt[1]*filnt[2]) / (filnt[4] - (filnt[4]*filnt[1]) +(filnt[2]*filnt[1]))) / log(filnt[1]);
 }
 
 void getT(double filnt[], bool arith) {
