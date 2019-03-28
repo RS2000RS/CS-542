@@ -23,13 +23,13 @@ int main()
 	cout << "Input boolean expression: ";
 	cin >> exp; 
 
-	evaluate(exp); 
+	cout << evaluate(exp); 
 
 }
 
 
 bool evaluate(string exp) {
-	for (int i = 0; i < exp.length; i++)
+	for (int i = 0; i < exp.length(); i++)
 		switch (exp[i]) {
 			case '0': operands.push(0); break;
 			case '1': operands.push(1); break;
@@ -39,21 +39,26 @@ bool evaluate(string exp) {
 					operation();
 				if (!operators.empty()) operators.pop(); 
 				break;
-			default: 
-				if (operators.empty()) operands.push(exp[i]);
-				else while (!operators.empty() && !higherPriority(exp[i], operators.top()))
+			default:
+				while (!operators.empty() && !higherPriority(exp[i], operators.top()))
 					operation();
 				operators.push(exp[i]);
 		}
+
+	while(!operators.empty())
+		operation();
+
+	return operands.top(); 
 }
 
 void operation() {
 	int a = operands.top(); operands.pop();
-	int b = operands.top(); operands.pop(); 
+	int b;
+	if (! operands.empty()) {b = operands.top(); operands.pop(); }
 	int op = operators.top(); operators.pop(); 
 
 	switch (op) {
-		case '!': operands.push(a);  operands.push(!b); break;
+		case '!': operands.push(!a); break;
 		case '&': operands.push(a & b); break;
 		case '^': operands.push(a ^ b); break;
 		case '|': operands.push(a | b); break;
@@ -61,7 +66,7 @@ void operation() {
 }
 
 bool higherPriority(char a, char b) {
-	if (find(a) <= find(b)) return true;
+	if (find(a) > find(b)) return true;
 	return false; 
 }
 
