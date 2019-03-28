@@ -31,13 +31,14 @@ int main()
 bool evaluate(string exp) {
 	for (int i = 0; i < exp.length(); i++)
 		switch (exp[i]) {
+			case ' ': break; 
 			case '0': operands.push(0); break;
 			case '1': operands.push(1); break;
 			case '(': operators.push('('); break;
 			case ')':
-				while (!operators.empty() && operators.top()!= '(')
+				while (operators.top()!= '(')
 					operation();
-				if (!operators.empty()) operators.pop(); 
+				operators.pop(); 
 				break;
 			default:
 				while (!operators.empty() && !higherPriority(exp[i], operators.top()))
@@ -52,7 +53,8 @@ bool evaluate(string exp) {
 }
 
 void operation() {
-	int a = operands.top(); operands.pop();
+	int a = operands.top(); 
+operands.pop();
 	int b;
 	if (! operands.empty()) {b = operands.top(); operands.pop(); }
 	int op = operators.top(); operators.pop(); 
@@ -63,6 +65,8 @@ void operation() {
 		case '^': operands.push(a ^ b); break;
 		case '|': operands.push(a | b); break;
 	}
+
+
 }
 
 bool higherPriority(char a, char b) {
