@@ -2,10 +2,10 @@
 //  CS 542 - Discrete Structures
 //  Homework #8
 
-#include "stdafx.h"
 #include <iostream>
 #include <stack>
 #include <string>
+//#include "stdafx.h"
 using namespace std;
 
 stack <char> operators;
@@ -19,12 +19,12 @@ int find(char c);
 
 int main()
 {
-	string exp;
+	//string exp;
 
 	cout << "Input boolean expression: ";
-	cin >> exp;
+	//cin >> exp;
 
-	cout << evaluate(exp) <<endl;
+	cout << evaluate("0&1|(1&!1)") << endl;
 
 }
 
@@ -57,7 +57,7 @@ void operation() {
 	int a = operands.top();
 	operands.pop();
 	int b = -1;
-	if (!operands.empty()) { b = operands.top(); operands.pop(); }
+	if (operators.top() != '!') { b = operands.top(); operands.pop(); }
 	int op = operators.top(); operators.pop();
 
 	switch (op) {
