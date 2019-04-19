@@ -2,6 +2,7 @@
 //  CS 542 - Discrete Structures
 //  Homework #10
 
+
 #include <iostream>
 #include <stack>
 #include <string>
@@ -26,18 +27,25 @@ int find(char c);
 
 int main()
 {
-	string input_str = "A & B,    !(!A | !B)"; 
-	//cin >> input_str;
+	string input_str; 
+	getline(cin,input_str);
 
-	int pos = input_str.find_first_of(',');
-	firstexp = input_str.substr(pos + 1), secondexp = input_str.substr(0, pos);
+	do {
+		int pos = input_str.find_first_of(',');
+		firstexp = input_str.substr(pos + 1), secondexp = input_str.substr(0, pos);
 
-	for (int i = 0; i < firstexp.length(); i++)
-		if (isalpha(firstexp[i]))
-			vars[firstexp[i]] = 3; 
+		for (int i = 0; i < firstexp.length(); i++)
+			if (isalpha(firstexp[i]))
+				vars[firstexp[i]] = 3; 
 
-	cout << equivalent(0,0) && equivalent(0,1);
+		if (equivalent(0,0) && equivalent(0,1))
+			cout<< "Equivalent" <<endl;
+		else 
+	 		cout<< "NOT Equivalent" <<endl;
 
+		getline(cin,input_str);
+
+	} while (input_str != "");
 
 }
 
@@ -46,7 +54,6 @@ bool equivalent(int depth, int val) {
 	auto first = vars.begin(); // get iterator to 1st element
 	advance(first, depth);     // advance by 9
 	vars[first->first] = val;
-
 	if (depth == vars.size()-1) return evaluate(valued_exp(firstexp)) == evaluate(valued_exp(secondexp));
 	else return equivalent(depth+1, 0) && equivalent(depth + 1, 1);
 }
@@ -58,13 +65,13 @@ string valued_exp(string exp) {
 	for (int i = 0; i < exp.length(); i++)
 		if (isalpha(exp[i])) val_exp[i] = to_string(vars[exp[i]])[0];
 
-
 	//cout << "++++" << val_exp << "++++\n";
 
 	return val_exp; 
 }
 
 bool evaluate(string exp) {
+
 	for (int i = 0; i < exp.length(); i++)
 		switch (exp[i]) {
 		case ' ': break;
@@ -75,7 +82,7 @@ bool evaluate(string exp) {
 			while (operators.top() != '(')
 				operation();
 			operators.pop();
-			break;
+			break;	
 		default:
 			while (!operators.empty() && !higherPriority(exp[i], operators.top()))
 				operation();
