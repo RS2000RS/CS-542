@@ -2,14 +2,12 @@
 //  CS 542 - Discrete Structures
 //  Homework #10
 
-
 #include <iostream>
 #include <stack>
 #include <string>
 #include <map>
 #include <utility>
 #include <iterator>
-#include "stdafx.h"
 using namespace std;
 
 stack<char> operators;
@@ -28,7 +26,7 @@ int find(char c);
 
 int main()
 {
-	string input_str = "A|B&G,A&G|B"; 
+	string input_str = "A & B,    !(!A | !B)"; 
 	//cin >> input_str;
 
 	int pos = input_str.find_first_of(',');
@@ -36,9 +34,9 @@ int main()
 
 	for (int i = 0; i < firstexp.length(); i++)
 		if (isalpha(firstexp[i]))
-			vars[firstexp[i]] = 0;
+			vars[firstexp[i]] = 3; 
 
-	equivalent(0, 0) && equivalent(0,1);
+	cout << equivalent(0,0) && equivalent(0,1);
 
 
 }
@@ -56,10 +54,12 @@ bool equivalent(int depth, int val) {
 string valued_exp(string exp) {
 	string val_exp=exp;
 
-	for (int i = 0; i < exp.length(); i++)
-		if (isalpha(exp[i])) val_exp[i] = vars[exp[i]];
 
-	cout << "++++" << val_exp << "++++\n";
+	for (int i = 0; i < exp.length(); i++)
+		if (isalpha(exp[i])) val_exp[i] = to_string(vars[exp[i]])[0];
+
+
+	//cout << "++++" << val_exp << "++++\n";
 
 	return val_exp; 
 }
