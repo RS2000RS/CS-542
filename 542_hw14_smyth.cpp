@@ -11,6 +11,7 @@ using namespace std;
 
 double monotonic(unsigned a, unsigned b);
 double strictlyMonotonic(unsigned a, unsigned b);
+double okNesting(unsigned n);
 bool monoCheck(string a);
 bool strictMonoCheck(string a);
 
@@ -48,6 +49,10 @@ double strictlyMonotonic(unsigned a, unsigned b) {
 	}
 
 	return double(count) / trials;
+}
+
+double okNesting(unsigned n){
+	//save stack, must start with '(', remove if ')' if stack has elements then not oknest
 }
 
 bool monoCheck(string a) {
